@@ -30,11 +30,14 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "chalk": "^2.1.0",
     "cross-env": "^5.1.1",
     "dataloader": "^1.3.0",
-    "express": "^4.15.4",
+    "express": "^4.16.2",
+    "find-pkg": "^1.0.0",
     "fullname": "^3.3.0",
+    "get-port": "^3.2.0",
     "globby": "^6.1.0",
     "graphql-apollo-errors": "^2.0.2",
     "node-plop": "^0.9.0",
@@ -65,7 +68,6 @@
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-prettier": "^2.1.2",
-    "get-port": "^3.2.0",
     "graphql-tools": "^2.5.0",
     "husky": "^0.14.3",
     "jest": "^21.2.1",

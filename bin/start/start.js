@@ -1,16 +1,17 @@
 import path from 'path';
 import shell from 'shelljs';
+import getPort from 'get-port';
+import Gramps from '@gramps/gramps'; // eslint-disable-line
+import express from 'express';
+import bodyParser from 'body-parser';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { getGrampsMode, getDataSource } from './lib/cli';
 
 export const builder = yargs => {
   yargs
-    .group('data-source-dir', 'Register a data source for mock development:')
-    .options({
-      'data-source-dir': {
-        alias: 'd',
-        description: 'path to a data source directory',
-        default: '',
-      },
+    .positional('dir', {
+      describe: 'path to data-source under development',
+      type: 'string',
     })
     .group(['live', 'mock'], 'Choose real or mock data:')
     .options({
@@ -28,14 +29,26 @@ export const builder = yargs => {
 };
 
 export const handler = async argv => {
-  // Get the full path to the GrAMPS root directory
-  const rootDir = path.resolve(__dirname, '..');
-  const mode = getGrampsMode(argv.live);
-  const source = getDataSource(rootDir, argv.dataSourceDir);
+  const enableMockData = getGrampsMode(argv.live) === 'mock';
+  const dataSources = [require(process.cwd(), argv.dir)]; // eslint-disable-line
 
-  // Move into the GrAMPS root and start the service.
-  shell.cd(rootDir);
-  shell.exec(`node dist/dev/server.js`, {
-    env: { GRAMPS_MODE: mode, GQL_DATA_SOURCES: source },
+  const app = express();
+  const gramps = Gramps({ dataSources, enableMockData });
+  const endpointURL = '/graphql';
+
+  app.use(bodyParser.json());
+  app.all(endpointURL, graphqlExpress(gramps));
+  app.get('/graphiql', graphiqlExpress({ endpointURL }));
+
+  const PORT = await getPort(8080);
+  app.listen(PORT, () => {
+    const message = [
+      `${EOL}============================================================`,
+      `    GrAMPS is running in ${mode} mode on port ${PORT}`,
+      '',
+      `    GraphiQL: http://localhost:${PORT}/graphiql`,
+      `============================================================${EOL}`,
+    ];
+    logger.info(message.join(EOL)); // eslint-disable-line no-console
   });
 };
