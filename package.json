@@ -25,7 +25,7 @@
     "build": "babel src -d dist && cpy \"**/*.graphql\" \"../dist/\" --cwd=src --parents",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "lint": "eslint src/**/*.js",
-    "test": "npm run lint --silent && npm run test:unit --silent",
+    "test": "npm run lint --silent",
     "test:unit": "cross-env NODE_ENV=test LOG4JS_LEVEL='OFF' jest --coverage",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
