@@ -4,8 +4,8 @@ import getPort from 'get-port';
 import Gramps from '@gramps/gramps'; // eslint-disable-line
 import express from 'express';
 import bodyParser from 'body-parser';
+import { EOL } from 'os';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import { getGrampsMode, getDataSource } from './lib/cli';
 
 export const builder = yargs => {
   yargs
@@ -29,15 +29,21 @@ export const builder = yargs => {
 };
 
 export const handler = async argv => {
-  const enableMockData = getGrampsMode(argv.live) === 'mock';
+  const mode = argv.live ? 'live' : 'mock';
+  const enableMockData = argv.mock;
   const dataSources = [require(process.cwd(), argv.dir)]; // eslint-disable-line
 
   const app = express();
-  const gramps = Gramps({ dataSources, enableMockData });
   const endpointURL = '/graphql';
 
   app.use(bodyParser.json());
-  app.all(endpointURL, graphqlExpress(gramps));
+  app.all(
+    endpointURL,
+    graphqlExpress(req => {
+      const gramps = Gramps({ dataSources, enableMockData, req });
+      return gramps;
+    }),
+  );
   app.get('/graphiql', graphiqlExpress({ endpointURL }));
 
   const PORT = await getPort(8080);
@@ -49,6 +55,6 @@ export const handler = async argv => {
       `    GraphiQL: http://localhost:${PORT}/graphiql`,
       `============================================================${EOL}`,
     ];
-    logger.info(message.join(EOL)); // eslint-disable-line no-console
+    console.info(message.join(EOL)); // eslint-disable-line no-console
   });
 };
