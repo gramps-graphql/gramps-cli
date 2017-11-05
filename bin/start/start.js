@@ -154,13 +154,13 @@ export const builder = yargs => {
       describe: 'path to data-source under development',
       type: 'string',
     })
-    .options({
-      server: {
-        alias: 's',
-        description: 'Optional path to server start script',
-        default: false,
-      },
-    })
+    // .options({
+    //   server: {
+    //     alias: 's',
+    //     description: 'Optional path to server start script',
+    //     default: false,
+    //   },
+    // })
     .group(['live', 'mock'], 'Choose real or mock data:')
     .options({
       live: {
@@ -180,13 +180,13 @@ export const handler = argv => {
   const mode = argv.live ? 'live' : 'mock';
   const sourcePath = getDataSource(process.cwd(), argv.dir);
 
-  if (!argv.server || !shell.test('-f', argv.server)) {
-    startDevServer(sourcePath, mode);
-    return;
-  }
+  // if (!argv.server || !shell.test('-f', argv.server)) {
+  startDevServer(sourcePath, mode);
+  //   return;
+  // }
 
-  console.info(`Starting server at ${argv.server}`);
-  shell.exec(`node ${argv.server}`, {
-    env: { GRAMPS_MODE: mode, GQL_DATA_SOURCES: sourcePath },
-  });
+  // console.info(`Starting server at ${argv.server}`);
+  // shell.exec(`node ${argv.server}`, {
+  //   env: { GRAMPS_MODE: mode, GQL_DATA_SOURCES: sourcePath },
+  // });
 };
