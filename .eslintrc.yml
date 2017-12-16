@@ -114,7 +114,6 @@ rules:
   no-sequences: off
   no-throw-literal: off
   no-unmodified-loop-condition: off
-  no-unused-expressions: error
   no-unused-labels: off
   no-useless-call: error
   no-useless-concat: error
@@ -283,3 +282,6 @@ rules:
     - bracketSpacing: true
       trailingComma: all
       singleQuote: true
+
+  # Because yargs is impure, we need to disable this rule
+  no-unused-expressions: off
