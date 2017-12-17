@@ -1,6 +1,15 @@
+import { EOL } from 'os';
 import path from 'path';
 import yargs from 'yargs';
+import cleanup from 'node-cleanup';
+import { spawn } from 'cross-spawn';
 import startDefaultGateway from '../lib/gateway';
+import {
+  loadDataSources,
+  transpileDataSources,
+  cleanUpTempDir,
+} from '../lib/data-sources';
+import { log, success, warn } from '../lib/logger';
 
 const getDirPath = dir => path.resolve(process.cwd(), dir);
 
@@ -45,23 +54,49 @@ export const builder = yargs =>
       },
     });
 
-export const handler = ({
+export const handler = async ({
   dataSources = [],
   mock = false,
   gateway,
   transpile,
 }) => {
-  console.log({
-    dataSources,
-    gateway,
-    mock,
-    transpile,
+  warn('The GrAMPS CLI is intended for local development only.');
+
+  let loadedDataSources = [];
+  if (dataSources.length) {
+    loadedDataSources = await transpileDataSources(transpile, dataSources).then(
+      loadDataSources,
+    );
+  }
+
+  // If a custom gateway was specified, set the env vars and start it.
+  if (gateway) {
+    // Define the `GRAMPS_DATA_SOURCES` env var.
+    process.env.GRAMPS_DATA_SOURCES = dataSources.length
+      ? dataSources.join(',')
+      : '';
+
+    // Start the user-specified gateway.
+    spawn('node', [gateway], { stdio: 'inherit' });
+    return;
+  }
+
+  // If we get here, fire up the default gateway for development.
+  startDefaultGateway({
+    dataSources: loadedDataSources,
+    enableMockData: mock,
+  });
+};
+
+cleanup((exitCode, signal) => {
+  log(' -> cleaning up temporary files');
+  // Delete the temporary directory.
+  cleanUpTempDir().then(() => {
+    success('Successfully shut down. Thanks for using GrAMPS!');
+    process.kill(process.pid, signal);
   });
 
-  if (!gateway) {
-    startDefaultGateway({
-      dataSources,
-      enableMockData: mock,
-    });
-  }
-};
+  // Uninstall the handler to prevent an infinite loop.
+  cleanup.uninstall();
+  return false;
+});
