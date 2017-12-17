@@ -13,6 +13,32 @@ import { log, success, warn } from '../lib/logger';
 
 const getDirPath = dir => path.resolve(process.cwd(), dir);
 
+const startGateway = ({
+  mock,
+  gateway,
+  dataSourcePaths,
+  loadedDataSources,
+}) => {
+  // If a custom gateway was specified, set the env vars and start it.
+  if (gateway) {
+    // Define GrAMPS env vars.
+    process.env.GRAMPS_MODE = mock ? 'mock' : 'live';
+    process.env.GRAMPS_DATA_SOURCES = dataSourcePaths.length
+      ? dataSourcePaths.join(',')
+      : '';
+
+    // Start the user-specified gateway.
+    spawn('node', [gateway], { stdio: 'inherit' });
+    return;
+  }
+
+  // If we get here, fire up the default gateway for development.
+  startDefaultGateway({
+    dataSources: loadedDataSources,
+    enableMockData: mock,
+  });
+};
+
 export const command = 'dev';
 export const description = 'run a GraphQL gateway for local development';
 
@@ -70,23 +96,11 @@ export const handler = async ({
     loadedDataSources = loadDataSources(dataSourcePaths);
   }
 
-  // If a custom gateway was specified, set the env vars and start it.
-  if (gateway) {
-    // Define GrAMPS env vars.
-    process.env.GRAMPS_MODE = mock ? 'mock' : 'live';
-    process.env.GRAMPS_DATA_SOURCES = dataSourcePaths.length
-      ? dataSourcePaths.join(',')
-      : '';
-
-    // Start the user-specified gateway.
-    spawn('node', [gateway], { stdio: 'inherit' });
-    return;
-  }
-
-  // If we get here, fire up the default gateway for development.
-  startDefaultGateway({
-    dataSources: loadedDataSources,
-    enableMockData: mock,
+  startGateway({
+    mock,
+    gateway,
+    dataSourcePaths,
+    loadedDataSources,
   });
 };
 
