@@ -62,18 +62,20 @@ export const handler = async ({
 }) => {
   warn('The GrAMPS CLI is intended for local development only.');
 
+  let dataSourcePaths = [];
   let loadedDataSources = [];
   if (dataSources.length) {
-    loadedDataSources = await transpileDataSources(transpile, dataSources).then(
-      loadDataSources,
-    );
+    // Get an array of paths to the local data sources.
+    dataSourcePaths = await transpileDataSources(transpile, dataSources);
+    loadedDataSources = loadDataSources(dataSourcePaths);
   }
 
   // If a custom gateway was specified, set the env vars and start it.
   if (gateway) {
-    // Define the `GRAMPS_DATA_SOURCES` env var.
-    process.env.GRAMPS_DATA_SOURCES = dataSources.length
-      ? dataSources.join(',')
+    // Define GrAMPS env vars.
+    process.env.GRAMPS_MODE = mock ? 'mock' : 'live';
+    process.env.GRAMPS_DATA_SOURCES = dataSourcePaths.length
+      ? dataSourcePaths.join(',')
       : '';
 
     // Start the user-specified gateway.
