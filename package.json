@@ -1,6 +1,6 @@
 {
   "name": "@gramps/cli",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.3",
   "description": "CLI for creating and developing with GrAMPS data sources.",
   "files": [
     "bin",
@@ -58,7 +58,6 @@
     "babel-plugin-inline-import": "^2.0.6",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
-    "condition-travis-enterprise": "^1.0.0",
     "eslint": "^4.2.0",
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-config-prettier": "^2.3.0",
@@ -69,8 +68,7 @@
     "jest": "^21.2.1",
     "nodemon": "^1.11.0",
     "prettier": "^1.5.3",
-    "semantic-release": "^8.2.0",
-    "supertest": "^3.0.0"
+    "semantic-release": "^8.2.0"
   },
   "jest": {
     "coverageReporters": [
