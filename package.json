@@ -27,6 +27,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
+    "@gramps/gramps": "^1.0.0-beta-9",
     "apollo-server-express": "^1.2.0",
     "babel-core": "^6.26.0",
     "body-parser": "^1.18.2",
@@ -38,7 +39,6 @@
     "express": "^4.16.2",
     "get-port": "^3.2.0",
     "globby": "^7.1.1",
-    "graphql": "^0.11.7",
     "graphql-playground-middleware-express": "^1.3.8",
     "inquirer": "^4.0.1",
     "mkdirp": "^0.5.1",
@@ -47,14 +47,12 @@
     "yargs": "^10.0.3"
   },
   "peerDependencies": {
-    "@gramps/gramps": "^1.0.0-beta-5",
     "graphql": "^0.11.7"
   },
   "devDependencies": {
-    "@gramps/gramps": "^1.0.0-beta-7",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^8.0.1",
-    "babel-jest": "^21.2.0",
+    "babel-jest": "^22.0.0",
     "babel-plugin-inline-import": "^2.0.6",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.24.1",
@@ -62,10 +60,11 @@
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-prettier": "^2.1.2",
-    "graphql-tools": "^2.5.0",
+    "eslint-plugin-prettier": "^2.4.0",
+    "graphql": "^0.11.7",
+    "graphql-tools": "^2.14.0",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
+    "jest": "^22.0.0",
     "nodemon": "^1.11.0",
     "prettier": "^1.5.3",
     "semantic-release": "^8.2.0"
