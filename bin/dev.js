@@ -105,10 +105,12 @@ export const handler = async ({
 };
 
 cleanup((exitCode, signal) => {
-  log(' -> cleaning up temporary files');
   // Delete the temporary directory.
-  cleanUpTempDir().then(() => {
-    success('Successfully shut down. Thanks for using GrAMPS!');
+  cleanUpTempDir().then(shouldPrintShutdownMessage => {
+    if (shouldPrintShutdownMessage) {
+      success('Successfully shut down. Thanks for using GrAMPS!');
+    }
+
     process.kill(process.pid, signal);
   });
 

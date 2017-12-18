@@ -4,5 +4,5 @@ import dev from './dev';
 
 yargs
   .command(dev)
-  // .demandCommand()
+  .demandCommand()
   .help().argv;
