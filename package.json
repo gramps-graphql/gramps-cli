@@ -22,7 +22,7 @@
     "gramps": "bin/index.js",
     "prepush": "npm test",
     "lint": "eslint {bin,lib}/**/*.js",
-    "test": "npm run lint --silent",
+    "test": "npm run lint --silent && npm run test:unit",
     "test:unit": "cross-env NODE_ENV=test LOG4JS_LEVEL='OFF' jest --coverage",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
@@ -76,8 +76,8 @@
       "lcov"
     ],
     "collectCoverageFrom": [
-      "{src,bin}/**/*.js",
-      "!bin/gramps.js"
+      "{lib,bin}/**/*.js",
+      "!bin/index.js"
     ],
     "coverageThreshold": {
       "global": {
