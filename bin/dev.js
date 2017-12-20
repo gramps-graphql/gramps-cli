@@ -91,9 +91,16 @@ export const handler = async ({
   let dataSourcePaths = [];
   let loadedDataSources = [];
   if (dataSources.length) {
-    // Get an array of paths to the local data sources.
-    dataSourcePaths = await transpileDataSources(transpile, dataSources);
-    loadedDataSources = loadDataSources(dataSourcePaths);
+    try {
+      // Get an array of paths to the local data sources.
+      dataSourcePaths = await transpileDataSources(transpile, dataSources);
+      loadedDataSources = loadDataSources(dataSourcePaths);
+    } catch (error) {
+      // If something went wrong loading data sources, log it, tidy up, and die.
+      console.error(error);
+      await cleanUpTempDir();
+      process.exit(2); // eslint-disable-line no-process-exit
+    }
   }
 
   startGateway({
