@@ -5,8 +5,8 @@ import {
   loadDataSources,
   transpileDataSources,
   cleanUpTempDir,
-} from '../lib/data-sources';
-import * as logger from '../lib/logger';
+} from '../../lib/data-sources';
+import * as logger from '../../lib/logger';
 
 jest.mock('babel-core', () => ({
   transformFileSync: () => ({ code: `var foo = 'bar';` }),
@@ -63,7 +63,7 @@ describe('lib/data-sources', () => {
 
   describe('loadDataSources()', () => {
     it('loads a single data source', () => {
-      const dirPath = path.resolve(__dirname, './fixtures/data-source-one');
+      const dirPath = path.resolve(__dirname, '../fixtures/data-source-one');
       expect(loadDataSources([dirPath])[0]).toEqual(
         expect.objectContaining({
           namespace: 'DataSourceOne',
@@ -72,8 +72,8 @@ describe('lib/data-sources', () => {
     });
 
     it('loads multiple data sources', () => {
-      const esPath = path.resolve(__dirname, './fixtures/data-source-one');
-      const cjsPath = path.resolve(__dirname, './fixtures/data-source-cjs');
+      const esPath = path.resolve(__dirname, '../fixtures/data-source-one');
+      const cjsPath = path.resolve(__dirname, '../fixtures/data-source-cjs');
 
       const dataSources = loadDataSources([esPath, cjsPath]);
 
@@ -96,7 +96,7 @@ describe('lib/data-sources', () => {
 
       const loadInvalidDataSource = () =>
         loadDataSources([
-          path.resolve(__dirname, './fixtures/data-source-invalid'),
+          path.resolve(__dirname, '../fixtures/data-source-invalid'),
         ]);
 
       expect(loadInvalidDataSource).toThrowError(
@@ -111,7 +111,7 @@ describe('lib/data-sources', () => {
   describe('transpileDataSources()', () => {
     it('returns the path of transpiled data source(s)', async () => {
       const dataSources = await transpileDataSources(true, [
-        path.resolve(__dirname, './fixtures/data-source-one'),
+        path.resolve(__dirname, '../fixtures/data-source-one'),
       ]);
 
       return expect(dataSources).toEqual([
@@ -120,7 +120,7 @@ describe('lib/data-sources', () => {
     });
 
     it('returns the original path if `--no-transpile` is set', async () => {
-      const cjsPath = path.resolve(__dirname, './fixtures/data-source-cjs');
+      const cjsPath = path.resolve(__dirname, '../fixtures/data-source-cjs');
       const dataSources = await transpileDataSources(false, [cjsPath]);
 
       return expect(dataSources).toEqual([cjsPath]);

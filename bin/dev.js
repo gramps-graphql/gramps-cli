@@ -3,7 +3,7 @@ import path from 'path';
 import yargs from 'yargs';
 import cleanup from 'node-cleanup';
 import { spawn } from 'cross-spawn';
-import startDefaultGateway from '../lib/gateway';
+import startDefaultGateway from '../gateway';
 import {
   loadDataSources,
   transpileDataSources,
