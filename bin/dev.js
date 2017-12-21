@@ -9,7 +9,8 @@ import {
   transpileDataSources,
   cleanUpTempDir,
 } from '../lib/data-sources';
-import { log, success, warn } from '../lib/logger';
+import cleanupOnExit from '../lib/cleanup-on-exit';
+import { warn } from '../lib/logger';
 
 const getDirPath = dir => path.resolve(process.cwd(), dir);
 
@@ -75,11 +76,9 @@ export const builder = yargs =>
       ['transpile', 'no-transpile'],
       'Choose whether to transpile data sources with Babel:',
     )
-    .options({
-      transpile: {
-        type: 'boolean',
-        default: true,
-      },
+    .option('transpile', {
+      type: 'boolean',
+      default: true,
     });
 
 export const handler = async ({
@@ -113,17 +112,4 @@ export const handler = async ({
   });
 };
 
-cleanup((exitCode, signal) => {
-  // Delete the temporary directory.
-  cleanUpTempDir().then(shouldPrintShutdownMessage => {
-    if (shouldPrintShutdownMessage) {
-      success('Successfully shut down. Thanks for using GrAMPS!');
-    }
-
-    process.kill(process.pid, signal);
-  });
-
-  // Uninstall the handler to prevent an infinite loop.
-  cleanup.uninstall();
-  return false;
-});
+cleanup(cleanupOnExit);
