@@ -27,8 +27,8 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
-    "@gramps/gramps": "^1.0.0-beta-9",
-    "apollo-server-express": "^1.2.0",
+    "@gramps/gramps": "^1.0.0",
+    "apollo-server-express": "^1.3.2",
     "babel-core": "^6.26.0",
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
@@ -43,11 +43,11 @@
     "inquirer": "^4.0.1",
     "mkdirp": "^0.5.1",
     "node-cleanup": "^2.1.2",
-    "reify": "^0.13.3",
+    "reify": "^0.13.5",
     "yargs": "^10.0.3"
   },
   "peerDependencies": {
-    "graphql": "^0.11.7"
+    "graphql": "^0.11.7 || ^0.12.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -61,8 +61,8 @@
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-prettier": "^2.4.0",
-    "graphql": "^0.11.7",
-    "graphql-tools": "^2.14.0",
+    "graphql": "^0.12.3",
+    "graphql-tools": "^2.14.1",
     "husky": "^0.14.3",
     "jest": "^22.0.0",
     "nodemon": "^1.11.0",

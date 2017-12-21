@@ -71,10 +71,12 @@ export const builder = yargs =>
         description: 'run GraphQL offline with mock data',
       },
     })
-    .group('no-transpile', 'Turn Babel on or off:')
+    .group(
+      ['transpile', 'no-transpile'],
+      'Choose whether to transpile data sources with Babel:',
+    )
     .options({
       transpile: {
-        description: 'don’t transpile data sources (point to a build dir)',
         type: 'boolean',
         default: true,
       },
