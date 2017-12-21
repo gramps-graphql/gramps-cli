@@ -1,4 +1,3 @@
-import { EOL } from 'os';
 import yargs from 'yargs';
 import dev from './dev';
 

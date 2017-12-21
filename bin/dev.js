@@ -3,13 +3,14 @@ import path from 'path';
 import yargs from 'yargs';
 import cleanup from 'node-cleanup';
 import { spawn } from 'cross-spawn';
-import startDefaultGateway from '../lib/gateway';
+import startDefaultGateway from '../gateway';
 import {
   loadDataSources,
   transpileDataSources,
   cleanUpTempDir,
 } from '../lib/data-sources';
-import { log, success, warn } from '../lib/logger';
+import cleanupOnExit from '../lib/cleanup-on-exit';
+import { warn } from '../lib/logger';
 
 const getDirPath = dir => path.resolve(process.cwd(), dir);
 
@@ -75,11 +76,9 @@ export const builder = yargs =>
       ['transpile', 'no-transpile'],
       'Choose whether to transpile data sources with Babel:',
     )
-    .options({
-      transpile: {
-        type: 'boolean',
-        default: true,
-      },
+    .option('transpile', {
+      type: 'boolean',
+      default: true,
     });
 
 export const handler = async ({
@@ -93,9 +92,16 @@ export const handler = async ({
   let dataSourcePaths = [];
   let loadedDataSources = [];
   if (dataSources.length) {
-    // Get an array of paths to the local data sources.
-    dataSourcePaths = await transpileDataSources(transpile, dataSources);
-    loadedDataSources = loadDataSources(dataSourcePaths);
+    try {
+      // Get an array of paths to the local data sources.
+      dataSourcePaths = await transpileDataSources(transpile, dataSources);
+      loadedDataSources = loadDataSources(dataSourcePaths);
+    } catch (error) {
+      // If something went wrong loading data sources, log it, tidy up, and die.
+      console.error(error);
+      await cleanUpTempDir();
+      process.exit(2); // eslint-disable-line no-process-exit
+    }
   }
 
   startGateway({
@@ -106,17 +112,4 @@ export const handler = async ({
   });
 };
 
-cleanup((exitCode, signal) => {
-  // Delete the temporary directory.
-  cleanUpTempDir().then(shouldPrintShutdownMessage => {
-    if (shouldPrintShutdownMessage) {
-      success('Successfully shut down. Thanks for using GrAMPS!');
-    }
-
-    process.kill(process.pid, signal);
-  });
-
-  // Uninstall the handler to prevent an infinite loop.
-  cleanup.uninstall();
-  return false;
-});
+cleanup(cleanupOnExit);
