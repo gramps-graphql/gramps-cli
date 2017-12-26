@@ -46,7 +46,7 @@ $(yarn bin)/gramps dev --data-source ../my-data-source --mock
 > # $(npm bin)/gramps dev --data-sources ./one ./two
 > ```
 >
-> This is helpful if you're working on something like [schema stitching](dev.apollodata.com/tools/graphql-tools/schema-stitching.html).
+> This is helpful if you're working on something like [schema stitching](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html).
 
 ### Start a custom GraphQL gateway
 
