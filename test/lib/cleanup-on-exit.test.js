@@ -1,7 +1,7 @@
 import cleanup from 'node-cleanup';
-import * as dataSources from '../../lib/data-sources';
-import * as logger from '../../lib/logger';
-import cleanupOnExit from '../../lib/cleanup-on-exit';
+import * as dataSources from '../../src/lib/data-sources';
+import * as logger from '../../src/lib/logger';
+import cleanupOnExit from '../../src/lib/cleanup-on-exit';
 
 dataSources.cleanUpTempDir = jest.fn();
 logger.success = jest.fn();

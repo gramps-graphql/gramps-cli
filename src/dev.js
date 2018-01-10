@@ -3,14 +3,14 @@ import path from 'path';
 import yargs from 'yargs';
 import cleanup from 'node-cleanup';
 import { spawn } from 'cross-spawn';
-import startDefaultGateway from '../gateway';
+import startDefaultGateway from './gateway';
 import {
   loadDataSources,
   transpileDataSources,
   cleanUpTempDir,
-} from '../lib/data-sources';
-import cleanupOnExit from '../lib/cleanup-on-exit';
-import { warn } from '../lib/logger';
+} from './lib/data-sources';
+import cleanupOnExit from './lib/cleanup-on-exit';
+import { warn } from './lib/logger';
 
 const getDirPath = dir => path.resolve(process.cwd(), dir);
 

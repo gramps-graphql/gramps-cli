@@ -1,13 +1,13 @@
 import path from 'path';
 import * as crossSpawn from 'cross-spawn';
-import * as dev from '../../bin/dev';
-import startDefaultGateway from '../../gateway';
-import * as dataSources from '../../lib/data-sources';
-import mockYargsImplementation from '../fixtures/mock-yargs';
+import * as dev from '../src/dev';
+import startDefaultGateway from '../src/gateway';
+import * as dataSources from '../src/lib/data-sources';
+import mockYargsImplementation from './fixtures/mock-yargs';
 
 jest.mock('cross-spawn', () => ({ spawn: jest.fn() }));
-jest.mock('../../gateway', () => jest.fn());
-jest.mock('../../lib/data-sources.js', () => ({
+jest.mock('../src/gateway', () => jest.fn());
+jest.mock('../src/lib/data-sources.js', () => ({
   loadDataSources: jest.fn(),
   transpileDataSources: jest.fn(),
   cleanUpTempDir: jest.fn(),

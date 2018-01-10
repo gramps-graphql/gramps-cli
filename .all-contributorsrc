@@ -1,0 +1,39 @@
+{
+  "projectName": "gramps-cli",
+  "projectOwner": "gramps-graphql",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "jlengstorf",
+      "name": "Jason Lengstorf",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/163561?v=4",
+      "profile": "https://code.lengstorf.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "ecwyne",
+      "name": "Eric Wyne",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/5205440?v=4",
+      "profile": "https://github.com/ecwyne",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "timrs2998",
+      "name": "Tim Schoenheider",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2964921?v=4",
+      "profile": "https://github.com/timrs2998",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ]
+}
