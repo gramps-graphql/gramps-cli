@@ -3,10 +3,7 @@
   "version": "0.0.0-development",
   "description": "CLI for creating and developing with GrAMPS data sources.",
   "files": [
-    "gramps.js",
-    "dev.js",
-    "gateway",
-    "lib"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -18,12 +15,12 @@
   ],
   "license": "MIT",
   "bin": {
-    "gramps": "gramps.js"
+    "gramps": "dist/gramps.js"
   },
   "scripts": {
-    "gramps": "./gramps.js",
+    "gramps": "./dist/gramps.js",
     "prepush": "npm test",
-    "build": "babel src -d .",
+    "build": "babel src -d dist",
     "lint": "eslint {src, test}/**/*.js",
     "test": "npm run lint --silent && npm run test:unit",
     "test:unit": "cross-env NODE_ENV=test LOG4JS_LEVEL='OFF' jest --coverage",
