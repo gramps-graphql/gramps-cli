@@ -1,5 +1,5 @@
 import yargs from 'yargs';
-import dev from '../src/dev';
+import * as dev from '../src/dev';
 
 jest.mock('yargs', () => ({
   command: jest.fn(() => ({
