@@ -4,7 +4,10 @@ node_modules
 .vscode
 .reify-cache
 # Don’t include the built module; npm will do that for us
-dist
+/gateway
+/lib
+/dev.js
+/gramps.js
 
 # Also don’t include temporary data sources
 .tmp

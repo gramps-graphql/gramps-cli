@@ -1,5 +1,5 @@
-import startServer from '../../gateway/start-server';
-import * as logger from '../../lib/logger';
+import startServer from '../../src/gateway/start-server';
+import * as logger from '../../src/lib/logger';
 
 console.log = jest.fn();
 const mockApp = { listen: jest.fn((port, cb) => cb()) };
@@ -16,9 +16,9 @@ describe('gateway/start-server', () => {
 
     expect(console.log).toHaveBeenCalled();
     expect(successSpy).toHaveBeenCalledWith(
-      expect.stringMatching(
-        /A GraphQL gateway has successfully started using live data./,
-      ),
+      expect.arrayContaining([
+        '  A GraphQL gateway has successfully started using live data.',
+      ]),
     );
   });
 
@@ -28,9 +28,9 @@ describe('gateway/start-server', () => {
     await startServer(mockApp, { enableMockData: true });
 
     expect(successSpy).toHaveBeenCalledWith(
-      expect.stringMatching(
-        /A GraphQL gateway has successfully started using mock data./,
-      ),
+      expect.arrayContaining([
+        '  A GraphQL gateway has successfully started using mock data.',
+      ]),
     );
   });
 
@@ -41,7 +41,11 @@ describe('gateway/start-server', () => {
       dataSources: [{ namespace: 'TestOne' }, { namespace: 'TestTwo' }],
     });
 
-    expect(successSpy).toHaveBeenCalledWith(expect.stringMatching(/TestOne/));
-    expect(successSpy).toHaveBeenCalledWith(expect.stringMatching(/TestTwo/));
+    expect(successSpy).toHaveBeenCalledWith(
+      expect.arrayContaining([expect.stringMatching(/TestOne/)]),
+    );
+    expect(successSpy).toHaveBeenCalledWith(
+      expect.arrayContaining([expect.stringMatching(/TestTwo/)]),
+    );
   });
 });

@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import * as logger from '../../lib/logger';
+import * as logger from '../../src/lib/logger';
 
 jest.mock('chalk', () => ({
   bold: jest.fn(),

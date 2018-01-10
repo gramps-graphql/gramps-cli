@@ -1,5 +1,7 @@
+#!/usr/bin/env node
+
 import yargs from 'yargs';
-import dev from './dev';
+import * as dev from './dev';
 
 yargs
   .command(dev)

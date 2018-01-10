@@ -5,8 +5,8 @@ import {
   loadDataSources,
   transpileDataSources,
   cleanUpTempDir,
-} from '../../lib/data-sources';
-import * as logger from '../../lib/logger';
+} from '../../src/lib/data-sources';
+import * as logger from '../../src/lib/logger';
 
 jest.mock('babel-core', () => ({
   transformFileSync: () => ({ code: `var foo = 'bar';` }),
@@ -99,9 +99,7 @@ describe('lib/data-sources', () => {
           path.resolve(__dirname, '../fixtures/data-source-invalid'),
         ]);
 
-      expect(loadInvalidDataSource).toThrowError(
-        expect.stringMatching(/Invalid data source./),
-      );
+      expect(loadInvalidDataSource).toThrowError('Invalid data source.');
       expect(console.error).toHaveBeenCalledWith(
         expect.stringMatching(/data source .*? is missing required properties/),
       );
@@ -115,7 +113,7 @@ describe('lib/data-sources', () => {
       ]);
 
       return expect(dataSources).toEqual([
-        path.resolve(process.cwd(), '.tmp/data-source-one'),
+        path.resolve(process.cwd(), 'src/.tmp/data-source-one'),
       ]);
     });
 
