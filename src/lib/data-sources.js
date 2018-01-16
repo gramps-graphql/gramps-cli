@@ -3,7 +3,7 @@ import path from 'path';
 import cpy from 'cpy';
 import del from 'del';
 import mkdirp from 'mkdirp';
-import babel from 'babel-core';
+import { transformFileSync } from 'babel-core';
 import globby from 'globby';
 import { error, log, warn } from './logger';
 
@@ -134,7 +134,7 @@ const transpileJS = dataSource => tmpDir =>
         return {
           filename,
           tmpFile: path.join(tmpDir, filename),
-          transpiled: babel.transformFileSync(file),
+          transpiled: transformFileSync(file),
         };
       })
       .map(writeTranspiledFile);
