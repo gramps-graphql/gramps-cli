@@ -26,7 +26,7 @@ export const handleError = (err, msg, callback) => {
 
 const getDirName = dir =>
   dir
-    .split('/')
+    .split(path.sep)
     .filter(str => str)
     .slice(-1)
     .pop();
