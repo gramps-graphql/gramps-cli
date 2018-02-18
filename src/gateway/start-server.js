@@ -1,5 +1,5 @@
 import getPort from 'get-port';
-
+import http from 'http';
 import { success } from '../lib/logger';
 import { DEFAULT_PORT, GRAPHQL_ENDPOINT, TESTING_ENDPOINT } from '.';
 
@@ -8,7 +8,9 @@ export default async function startServer(
   { enableMockData, dataSources = [] } = {},
 ) {
   const PORT = await getPort(DEFAULT_PORT);
-  app.listen(PORT, () => {
+  const server = http.createServer(app);
+
+  server.listen(PORT, error => {
     const mode = enableMockData ? 'mock' : 'live';
     success([
       '='.repeat(65),
@@ -29,4 +31,6 @@ export default async function startServer(
       '='.repeat(65),
     ]);
   });
+
+  return server;
 }

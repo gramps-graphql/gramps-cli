@@ -38,6 +38,10 @@ $(yarn bin)/gramps dev --data-source ../my-data-source
 # Turn on mock data
 $(yarn bin)/gramps dev --data-source ../my-data-source --mock
 # $(npm bin)/gramps dev --data-source ../my-data-source --mock
+
+# Turn on watch mode (hot reloading, doesn't restart server)
+$(yarn bin)/gramps dev --data-source ../my-data-source --mock --watch
+# $(npm bin)/gramps dev --data-source ../my-data-source --mock --watch
 ```
 
 > **NOTE:** You can develop using multiple local data sources by passing multiple paths to the `--data-sources` option (an alias of `--data-source`):
