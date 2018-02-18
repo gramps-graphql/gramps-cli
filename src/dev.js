@@ -64,6 +64,7 @@ export const builder = yargs =>
       description: 'path to a GraphQL gateway start script',
       type: 'string',
     })
+    .group(['watch'], 'Choose whether to enable watch mode:')
     .option('watch', {
       alias: 'w',
       description: 'watch file changes on data sources',
