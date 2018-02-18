@@ -35,6 +35,7 @@ describe('gramps dev', () => {
       expect(yargs.option).toBeCalledWith('data-source', expect.any(Object));
       expect(yargs.option).toBeCalledWith('gateway', expect.any(Object));
       expect(yargs.option).toBeCalledWith('transpile', expect.any(Object));
+      expect(yargs.option).toBeCalledWith('watch', expect.any(Object));
       expect(yargs.options).toBeCalledWith(
         expect.objectContaining({
           live: expect.any(Object),
@@ -73,13 +74,14 @@ describe('gramps dev', () => {
       );
     });
 
-    it('starts the default gateway with no arguments', () => {
-      dev.handler({});
+    it('starts the default gateway with no arguments', async () => {
+      await dev.handler({});
 
       expect(startDefaultGateway).toBeCalledWith(
         expect.objectContaining({
-          dataSources: expect.any(Array),
           enableMockData: expect.any(Boolean),
+          enableWatchMode: expect.any(Boolean),
+          processDataSources: expect.any(Function),
         }),
       );
     });
@@ -134,6 +136,20 @@ describe('gramps dev', () => {
       expect(console.error).toBeCalledWith(expect.any(Error));
       expect(dataSources.cleanUpTempDir).toBeCalled();
       expect(process.exit).toBeCalledWith(2);
+    });
+
+    it('logs an error but not exit if loading data sources fails and watch mode is on', async () => {
+      console.error = jest.fn();
+      process.exit = jest.fn();
+
+      dataSources.loadDataSources.mockImplementationOnce(() => {
+        throw Error('test error');
+      });
+
+      await dev.handler({ dataSources: ['./one'], watch: true });
+      expect(console.error).toBeCalledWith(expect.any(Error));
+      expect(dataSources.cleanUpTempDir).toBeCalled();
+      expect(process.exit).not.toBeCalledWith(2);
     });
   });
 });

@@ -2,7 +2,13 @@ import startServer from '../../src/gateway/start-server';
 import * as logger from '../../src/lib/logger';
 
 console.log = jest.fn();
-const mockApp = { listen: jest.fn((port, cb) => cb()) };
+const mockApp = jest.fn();
+jest.mock('http', () => ({
+  createServer: () => ({
+    listen: jest.fn((port, cb) => cb()),
+  }),
+}));
+jest.mock('express', () => jest.fn());
 
 describe('gateway/start-server', () => {
   beforeEach(() => {

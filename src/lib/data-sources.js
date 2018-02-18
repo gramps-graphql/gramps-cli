@@ -24,7 +24,7 @@ export const handleError = (err, msg, callback) => {
   throw err;
 };
 
-const getDirName = dir =>
+export const getDirName = dir =>
   dir
     .split(path.sep)
     .filter(str => str)

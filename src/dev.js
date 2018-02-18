@@ -1,5 +1,6 @@
 import { EOL } from 'os';
 import path from 'path';
+import http from 'http';
 import yargs from 'yargs';
 import cleanup from 'node-cleanup';
 import { spawn } from 'cross-spawn';
@@ -14,12 +15,14 @@ import { warn } from './lib/logger';
 
 const getDirPath = dir => path.resolve(process.cwd(), dir);
 
-const startGateway = ({
+const startGateway = async ({
   mock,
+  watch,
   gateway,
-  dataSourcePaths,
-  loadedDataSources,
+  processor,
+  dataSources,
 }) => {
+  const { dataSourcePaths, loadedDataSources } = await processor();
   // If a custom gateway was specified, set the env vars and start it.
   if (gateway) {
     // Define GrAMPS env vars.
@@ -35,8 +38,12 @@ const startGateway = ({
 
   // If we get here, fire up the default gateway for development.
   startDefaultGateway({
-    dataSources: loadedDataSources,
+    dataSourcePaths,
     enableMockData: mock,
+    enableWatchMode: watch,
+    originalDataSources: dataSources,
+    dataSources: loadedDataSources,
+    processDataSources: processor,
   });
 };
 
@@ -56,6 +63,10 @@ export const builder = yargs =>
       alias: 'g',
       description: 'path to a GraphQL gateway start script',
       type: 'string',
+    })
+    .option('watch', {
+      alias: 'w',
+      description: 'watch file changes on data sources',
     })
     .coerce('d', srcArr => srcArr.map(getDirPath))
     .coerce('g', getDirPath)
@@ -81,14 +92,7 @@ export const builder = yargs =>
       default: true,
     });
 
-export const handler = async ({
-  dataSources = [],
-  mock = false,
-  gateway,
-  transpile,
-}) => {
-  warn('The GrAMPS CLI is intended for local development only.');
-
+const processDataSources = (watch, transpile, dataSources) => async () => {
   let dataSourcePaths = [];
   let loadedDataSources = [];
   if (dataSources.length) {
@@ -100,15 +104,31 @@ export const handler = async ({
       // If something went wrong loading data sources, log it, tidy up, and die.
       console.error(error);
       await cleanUpTempDir();
-      process.exit(2); // eslint-disable-line no-process-exit
+      if (!watch) {
+        process.exit(2); // eslint-disable-line no-process-exit
+      }
     }
   }
 
-  startGateway({
+  return { dataSourcePaths, loadedDataSources };
+};
+
+export const handler = async ({
+  dataSources = [],
+  mock = false,
+  gateway,
+  transpile,
+  watch = false,
+}) => {
+  warn('The GrAMPS CLI is intended for local development only.');
+  const processor = processDataSources(watch, transpile, dataSources);
+
+  await startGateway({
     mock,
+    watch,
     gateway,
-    dataSourcePaths,
-    loadedDataSources,
+    processor,
+    dataSources,
   });
 };
 
