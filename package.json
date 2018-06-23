@@ -57,7 +57,7 @@
     "babel-jest": "^22.0.0",
     "babel-plugin-inline-import": "^2.0.6",
     "babel-preset-env": "^1.6.0",
-    "eslint": "^4.2.0",
+    "eslint": "^5.0.0",
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-import": "^2.3.0",
