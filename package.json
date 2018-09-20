@@ -63,7 +63,7 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-prettier": "^2.4.0",
     "graphql": "^0.12.3",
-    "graphql-tools": "^2.14.1",
+    "graphql-tools": "^4.0.0",
     "husky": "^0.14.3",
     "jest": "^22.0.0",
     "prettier": "^1.5.3",
