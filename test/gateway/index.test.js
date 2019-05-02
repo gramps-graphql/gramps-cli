@@ -11,8 +11,8 @@ jest.mock('../../src/gateway/configure-app.js', () =>
 jest.mock('../../src/gateway/start-server.js', () => jest.fn());
 
 describe('gateway', () => {
-  it('starts the default gateway', () => {
-    startDefaultGateway({ dataSources: [] });
+  it('starts the default gateway', async () => {
+    await startDefaultGateway({ dataSources: [] });
 
     expect(configureApp).toHaveBeenCalledWith(Express(), { dataSources: [] });
     expect(startServer).toHaveBeenCalledWith('TEST APP', { dataSources: [] });

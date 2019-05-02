@@ -61,12 +61,19 @@ const makeParentTempDir = () =>
     });
   });
 
+const isRemoteSchema = dataSource => {
+  const requiredKeys = ['namespace', 'remoteSchema'];
+  const missingKeys = requiredKeys.filter(k => !dataSource.hasOwnProperty(k));
+  return !missingKeys.length;
+};
+
 const hasRequiredProperties = (dataSource, dirPath) => {
   const requiredKeys = ['namespace', 'resolvers', 'typeDefs'];
   const missingKeys = requiredKeys.filter(k => !dataSource.hasOwnProperty(k));
   const hasAllRequiredProperties = !missingKeys.length;
+  const hasRemoteSchemaProperties = isRemoteSchema(dataSource);
 
-  if (!hasAllRequiredProperties) {
+  if (!hasAllRequiredProperties && !hasRemoteSchemaProperties) {
     const name = dataSource.namespace || `in ${getDirName(dirPath)}`;
     error([
       `${'='.repeat(36)} ERROR! ${'='.repeat(36)}`,
@@ -81,7 +88,7 @@ const hasRequiredProperties = (dataSource, dirPath) => {
     ]);
   }
 
-  return hasAllRequiredProperties;
+  return hasAllRequiredProperties || hasRemoteSchemaProperties;
 };
 
 const isValidDataSource = dataSourcePath => {

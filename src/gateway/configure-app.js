@@ -5,8 +5,8 @@ import playground from 'graphql-playground-middleware-express';
 
 import { GRAPHQL_ENDPOINT, TESTING_ENDPOINT } from '.';
 
-export default function configureApp(app, config) {
-  const GraphQLOptions = gramps(config);
+export default async function configureApp(app, config) {
+  const GraphQLOptions = await gramps(config);
 
   app.use(bodyParser.json());
   app.use(GRAPHQL_ENDPOINT, graphqlExpress(GraphQLOptions));
