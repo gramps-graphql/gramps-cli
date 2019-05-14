@@ -89,9 +89,13 @@ describe('gramps dev', () => {
 
       expect(process.env.GRAMPS_MODE).toEqual('live');
       expect(process.env.GRAMPS_DATA_SOURCES).toEqual('');
-      expect(crossSpawn.spawn).toBeCalledWith('node', ['./gateway.js'], {
-        stdio: 'inherit',
-      });
+      expect(crossSpawn.spawn).toBeCalledWith(
+        'nodemon',
+        ['-e', 'js,graphql', './gateway.js'],
+        {
+          stdio: 'inherit',
+        },
+      );
     });
 
     it('starts a custom gateway in mock mode when flag is set', async () => {

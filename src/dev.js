@@ -29,7 +29,7 @@ const startGateway = ({
       : '';
 
     // Start the user-specified gateway.
-    spawn('node', [gateway], { stdio: 'inherit' });
+    spawn('nodemon', ['-e', 'js,graphql', gateway], { stdio: 'inherit' });
     return;
   }
 
