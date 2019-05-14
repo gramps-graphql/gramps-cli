@@ -1,5 +1,5 @@
 <a href="https://gramps.js.org/"><img src="https://gramps.js.org/assets/img/gramps-banner.png" alt="GrAMPS · An easier way to manage the data sources powering your GraphQL server" width="450"></a>
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
 
 # GrAMPS CLI — Tools for Data Source Development
 
@@ -74,11 +74,9 @@ If the data source is already installed on the gateway, GrAMPS will override it 
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/163561?v=4" width="100px;"/><br /><sub><b>Jason Lengstorf</b></sub>](https://code.lengstorf.com)<br />[💻](https://github.com/gramps-graphql/gramps-cli/commits?author=jlengstorf "Code") [📖](https://github.com/gramps-graphql/gramps-cli/commits?author=jlengstorf "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/5205440?v=4" width="100px;"/><br /><sub><b>Eric Wyne</b></sub>](https://github.com/ecwyne)<br />[💻](https://github.com/gramps-graphql/gramps-cli/commits?author=ecwyne "Code") | [<img src="https://avatars0.githubusercontent.com/u/2964921?v=4" width="100px;"/><br /><sub><b>Tim Schoenheider</b></sub>](https://github.com/timrs2998)<br />[📖](https://github.com/gramps-graphql/gramps-cli/commits?author=timrs2998 "Documentation") |
-| :---: | :---: | :---: |
-
+| [<img src="https://avatars2.githubusercontent.com/u/163561?v=4" width="100px;"/><br /><sub><b>Jason Lengstorf</b></sub>](https://code.lengstorf.com)<br />[💻](https://github.com/gramps-graphql/gramps-cli/commits?author=jlengstorf "Code") [📖](https://github.com/gramps-graphql/gramps-cli/commits?author=jlengstorf "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/5205440?v=4" width="100px;"/><br /><sub><b>Eric Wyne</b></sub>](https://github.com/ecwyne)<br />[💻](https://github.com/gramps-graphql/gramps-cli/commits?author=ecwyne "Code") | [<img src="https://avatars0.githubusercontent.com/u/2964921?v=4" width="100px;"/><br /><sub><b>Tim Schoenheider</b></sub>](https://github.com/timrs2998)<br />[📖](https://github.com/gramps-graphql/gramps-cli/commits?author=timrs2998 "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/13582620?v=4" width="100px;"/><br /><sub><b>Chris Knabe</b></sub>](https://github.com/cknabe)<br />[💻](https://github.com/gramps-graphql/gramps-cli/commits?author=cknabe "Code") | [<img src="https://avatars3.githubusercontent.com/u/7374889?v=4" width="100px;"/><br /><sub><b>Logan McCaul</b></sub>](http://loganmccaul.com)<br />[💻](https://github.com/gramps-graphql/gramps-cli/commits?author=loganmccaul "Code") |
+| :---: | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
