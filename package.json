@@ -1,6 +1,6 @@
 {
   "name": "@gramps/cli",
-  "version": "1.2.0",
+  "version": "0.0.0-development",
   "description": "CLI for creating and developing with GrAMPS data sources.",
   "files": [
     "dist"
@@ -27,7 +27,7 @@
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
     "contributors:check": "all-contributors check",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@gramps/gramps": "^1.0.0",
@@ -67,7 +67,7 @@
     "husky": "^0.14.3",
     "jest": "^22.0.0",
     "prettier": "^1.5.3",
-    "semantic-release": "^11.0.2"
+    "semantic-release": "^15.13.12"
   },
   "jest": {
     "coverageReporters": [
